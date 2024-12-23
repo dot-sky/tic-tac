@@ -5,11 +5,12 @@ player
 gamecontroller
 
 */
-const gameBoard = (function () {
+function GameBoard() {
   let board = [];
   const BOARD_SIZE = 3;
   createBoard();
   resetBoard();
+
   function createBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       board[i] = [];
@@ -18,6 +19,7 @@ const gameBoard = (function () {
       }
     }
   }
+
   function resetBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
@@ -25,6 +27,7 @@ const gameBoard = (function () {
       }
     }
   }
+
   function displayBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       let boardRow = "";
@@ -34,7 +37,50 @@ const gameBoard = (function () {
       console.log(boardRow);
     }
   }
+
   function makeMove(player, marker) {}
-  function checkWin(player, marker) {}
-  return { displayBoard };
+
+  return { displayBoard, makeMove };
+}
+
+function Player(name, marker) {
+  const getName = () => name;
+  const getMarker = () => marker;
+  return { getName, getMarker };
+}
+
+const gameController = (function () {
+  const gameBoard = GameBoard();
+  const players = [];
+  players.push(Player("First", "X"));
+  players.push(Player("Second", "O"));
+
+  // player turn
+  let activePlayer = players[0];
+
+  const getActivePlayer = () => activePlayer;
+
+  const switchPlayer = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+
+  const playTurn = (pos) => {
+    console.log(`${activePlayer.getName()} plays on position ${pos}`);
+
+    const winState = gameBoard.playTurn(currPlayer.getMarker(), pos);
+    gameBoard.displayBoard();
+    if (winState) {
+      console.log("Game has ended");
+      console.log(activePlayer, "has won");
+    }
+
+    switchPlayer();
+    showGameState();
+  };
+
+  const showGameState = () => {
+    gameBoard.displayBoard;
+    console.log(`Waiting move of ${activePlayer.getName()}...`);
+  };
+  return { playTurn, getActivePlayer };
 })();
