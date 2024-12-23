@@ -15,7 +15,7 @@ function GameBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       board[i] = [];
       for (let j = 0; j < BOARD_SIZE; j++) {
-        board[i].push("-");
+        board[i].push(Cell());
       }
     }
   }
@@ -23,7 +23,7 @@ function GameBoard() {
   function resetBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = "-";
+        board[i][j] = Cell();
       }
     }
   }
@@ -32,7 +32,7 @@ function GameBoard() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       let boardRow = "";
       for (let j = 0; j < BOARD_SIZE; j++) {
-        boardRow += board[i][j] + " ";
+        boardRow += board[i][j].getValue() + " ";
       }
       console.log(boardRow);
     }
@@ -41,6 +41,15 @@ function GameBoard() {
   function makeMove(player, marker) {}
 
   return { displayBoard, makeMove };
+}
+
+function Cell() {
+  let value = "-";
+  const getValue = () => value;
+  const setValue = (marker) => {
+    value = marker;
+  };
+  return { getValue, setValue };
 }
 
 function Player(name, marker) {
