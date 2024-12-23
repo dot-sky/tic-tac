@@ -37,8 +37,20 @@ function GameBoard() {
       console.log(boardRow);
     }
   }
-
-  function makeMove(player, marker) {}
+  const isValidCell = (row, col) => {
+    return row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
+  };
+  function makeMove(marker, pos) {
+    /* pos = position from top left corner */
+    const row = Math.floor(pos / 3);
+    const col = pos % 3;
+    if (isValidCell(row, col) && board[row][col].isFree()) {
+      board[row][col].setValue(marker);
+    } else {
+      console.log("Invalid move... try again");
+    }
+    // checkWin conditions
+  }
 
   return { displayBoard, makeMove };
 }
@@ -49,7 +61,10 @@ function Cell() {
   const setValue = (marker) => {
     value = marker;
   };
-  return { getValue, setValue };
+  const isFree = () => {
+    return value === "-";
+  };
+  return { getValue, setValue, isFree };
 }
 
 function Player(name, marker) {
@@ -76,7 +91,7 @@ const gameController = (function () {
   const playTurn = (pos) => {
     console.log(`${activePlayer.getName()} plays on position ${pos}`);
 
-    const winState = gameBoard.playTurn(currPlayer.getMarker(), pos);
+    const winState = gameBoard.makeMove(activePlayer.getMarker(), pos);
     gameBoard.displayBoard();
     if (winState) {
       console.log("Game has ended");
@@ -91,5 +106,6 @@ const gameController = (function () {
     gameBoard.displayBoard;
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
+
   return { playTurn, getActivePlayer };
 })();
