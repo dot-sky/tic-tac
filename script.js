@@ -8,6 +8,7 @@ gamecontroller
 function GameBoard() {
   let board = [];
   const BOARD_SIZE = 3;
+  let freeCells = BOARD_SIZE * BOARD_SIZE;
   createBoard();
   resetBoard();
 
@@ -46,15 +47,20 @@ function GameBoard() {
     const row = Math.floor(pos / 3);
     const col = pos % 3;
     let validMove;
+    let draw = false;
     if (isValidCell(row, col) && board[row][col].isFree()) {
       board[row][col].setValue(marker);
       validMove = true;
+      freeCells--;
+      if (freeCells === 0) {
+        draw = true;
+      }
     } else {
       console.log("Invalid move... try again");
       validMove = false;
     }
     const winState = checkWin(marker);
-    return { validMove, ...winState };
+    return { validMove, draw, ...winState };
   };
   const checkWin = (marker) => {
     // check rows
@@ -63,13 +69,8 @@ function GameBoard() {
       // first cell is empty, no need to check the rest
       if (board[i][0].isFree()) continue;
       for (let j = 1; j < BOARD_SIZE; j++) {
-        // console.error(
-        //   `i: ${i} j: ${j}, ${board[i][0].getValue()} ${board[i][j].getValue()}`
-        // );
-        // console.log(board[i][0].getValue() !== board[i][j].getValue());
         if (board[i][0].getValue() !== board[i][j].getValue()) win = false;
       }
-      // console.log("---- win", win);
       if (win) return { win: true, winType: "row", index: i };
     }
     // check cols
@@ -148,8 +149,8 @@ const gameController = (function () {
     console.log(`${activePlayer.getName()} plays on position ${pos}`);
     const gameState = gameBoard.makeMove(activePlayer.getMarker(), pos);
 
-    if (gameState.validMove && gameState.win) {
-      finishRound();
+    if (gameState.validMove && (gameState.win || gameState.draw)) {
+      finishRound(gameState.draw);
     } else if (gameState.validMove) {
       switchPlayer();
       showGameState();
@@ -157,9 +158,15 @@ const gameController = (function () {
       showGameState();
     }
   };
-  const finishRound = () => {
+  const finishRound = (draw) => {
     gameBoard.displayBoard();
-    console.log(`${activePlayer.getName()} has won the game!`);
+    let finishMsg;
+    if (draw) {
+      finishMsg = `Game has ended in a draw!`;
+    } else {
+      finishMsg = `${activePlayer.getName()} has won the game!`;
+    }
+    console.log(finishMsg);
     activeRound = false;
   };
   const showGameState = () => {
@@ -173,4 +180,8 @@ gameController.playTurn(4);
 gameController.playTurn(1);
 gameController.playTurn(2);
 gameController.playTurn(0);
+gameController.playTurn(3);
 gameController.playTurn(6);
+gameController.playTurn(7);
+gameController.playTurn(5);
+gameController.playTurn(8);
