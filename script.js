@@ -1,10 +1,3 @@
-/*
-gameboard
-    gameboard is an array 
-player
-gamecontroller
-
-*/
 function GameBoard() {
   let board = [];
   const BOARD_SIZE = 3;
@@ -59,28 +52,28 @@ function GameBoard() {
       console.log("Invalid move... try again");
       validMove = false;
     }
-    const winState = checkWin(marker);
+    const winState = checkWin();
     return { validMove, draw, ...winState };
   };
-  const checkWin = (marker) => {
-    // check rows
+  const checkWin = () => {
     for (let i = 0; i < BOARD_SIZE; i++) {
       let win = true;
       // first cell is empty, no need to check the rest
-      if (board[i][0].isFree()) continue;
-      for (let j = 1; j < BOARD_SIZE; j++) {
-        if (board[i][0].getValue() !== board[i][j].getValue()) win = false;
+      // check row
+      if (!board[i][0].isFree()) {
+        for (let j = 1; j < BOARD_SIZE; j++) {
+          if (board[i][0].getValue() !== board[i][j].getValue()) win = false;
+        }
+        if (win) return { win: true, winType: "row", index: i };
       }
-      if (win) return { win: true, winType: "row", index: i };
-    }
-    // check cols
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      let win = true;
-      if (board[0][i].isFree()) continue;
-      for (let j = 1; j < BOARD_SIZE; j++) {
-        if (board[0][i].getValue() !== board[j][i].getValue()) win = false;
+      // check col
+      if (!board[0][i].isFree()) {
+        win = true;
+        for (let j = 1; j < BOARD_SIZE; j++) {
+          if (board[0][i].getValue() !== board[j][i].getValue()) win = false;
+        }
+        if (win) return { win: true, winType: "col", index: i };
       }
-      if (win) return { win: true, winType: "col" };
     }
 
     // check diag
@@ -100,7 +93,7 @@ function GameBoard() {
         )
           win = false;
       }
-      if (win) return { win: true, winType: "diagRev" };
+      if (win) return { win: true, winType: "secondDiag" };
     }
     return { win: false, winType: "none" };
   };
@@ -158,6 +151,7 @@ const gameController = (function () {
       showGameState();
     }
   };
+
   const finishRound = (draw) => {
     gameBoard.displayBoard();
     let finishMsg;
@@ -176,12 +170,38 @@ const gameController = (function () {
 
   return { playTurn, getActivePlayer };
 })();
+// player 1 wins diag
 gameController.playTurn(4);
 gameController.playTurn(1);
 gameController.playTurn(2);
 gameController.playTurn(0);
-gameController.playTurn(3);
 gameController.playTurn(6);
-gameController.playTurn(7);
-gameController.playTurn(5);
-gameController.playTurn(8);
+
+// player 2 wins col
+// check this game state win isn't correctly recognized
+// gameController.playTurn(8);
+// gameController.playTurn(0);
+// gameController.playTurn(2);
+// gameController.playTurn(3);
+// gameController.playTurn(1);
+// gameController.playTurn(6);
+// gameController.playTurn(3);
+// player 1 wins row
+
+// gameController.playTurn(8);
+// gameController.playTurn(3);
+// gameController.playTurn(2);
+// gameController.playTurn(4);
+// gameController.playTurn(1);
+// gameController.playTurn(5);
+// gameController.playTurn(3);
+// draw
+// gameController.playTurn(4);
+// gameController.playTurn(1);
+// gameController.playTurn(2);
+// gameController.playTurn(0);
+// gameController.playTurn(3);
+// gameController.playTurn(6);
+// gameController.playTurn(7);
+// gameController.playTurn(5);
+// gameController.playTurn(8);
