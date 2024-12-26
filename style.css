@@ -1,0 +1,5 @@
+#board {
+  display: grid;
+  grid-template: repeat(3, 50px) / repeat(3, 50px);
+  gap: 1px;
+}

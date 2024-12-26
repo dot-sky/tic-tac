@@ -23,6 +23,10 @@ function GameBoard() {
     }
   }
 
+  const getBoardSize = () => BOARD_SIZE;
+
+  const getBoard = () => board;
+
   function displayBoard() {
     let boardString = "";
     for (let i = 0; i < BOARD_SIZE; i++) {
@@ -99,7 +103,7 @@ function GameBoard() {
     return { win: false, winType: "none" };
   };
 
-  return { displayBoard, makeMove, resetBoard };
+  return { displayBoard, makeMove, resetBoard, getBoardSize, getBoard };
 }
 
 function Cell() {
@@ -120,7 +124,7 @@ function Player(name, marker) {
   return { getName, getMarker };
 }
 
-const gameController = (function () {
+function GameController() {
   const gameBoard = GameBoard();
   const players = [];
   players.push(Player("First", "X"));
@@ -182,28 +186,57 @@ const gameController = (function () {
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
 
-  newRound();
-  return { playTurn, getActivePlayer, newRound };
-})();
-// player 1 wins diag
-gameController.playTurn(4);
-gameController.playTurn(1);
-gameController.playTurn(2);
-gameController.playTurn(0);
-gameController.playTurn(6);
+  startGame();
+  return {
+    playTurn,
+    getActivePlayer,
+    newRound,
+    getBoard: gameBoard.getBoard,
+    getBoardSize: gameBoard.getBoardSize,
+  };
+}
 
-gameController.newRound();
+const ScreenController = (function (doc) {
+  const game = GameController();
+  // load DOM
+  const container = doc.querySelector("#board");
+  const msgBox = doc.querySelector("#msg");
+  // fill container with board
+  console.log("Screen");
+  const updateScreen = () => {
+    const board = game.getBoard();
+    board.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        const cellBtn = doc.createElement("button");
+        cellBtn.textContent = cell.getValue();
+        cellBtn.id = i * game.getBoardSize() + j;
+        container.appendChild(cellBtn);
+        console.log("adding");
+      });
+    });
+  };
+  updateScreen();
+})(document);
+
+// player 1 wins diag
+// gameController.playTurn(4);
+// gameController.playTurn(1);
+// gameController.playTurn(2);
+// gameController.playTurn(0);
+// gameController.playTurn(6);
+
+// gameController.newRound();
 
 // player 2 wins col
 // check this game state win isn't correctly recognized
-gameController.playTurn(8);
-gameController.playTurn(0);
-gameController.playTurn(2);
-gameController.playTurn(3);
-gameController.playTurn(1);
-gameController.playTurn(6);
+// gameController.playTurn(8);
+// gameController.playTurn(0);
+// gameController.playTurn(2);
+// gameController.playTurn(3);
+// gameController.playTurn(1);
+// gameController.playTurn(6);
 // player 1 wins row
-gameController.newRound();
+// gameController.newRound();
 // gameController.playTurn(8);
 // gameController.playTurn(3);
 // gameController.playTurn(2);
