@@ -127,16 +127,16 @@ function Player(name, marker) {
 function GameController() {
   const gameBoard = GameBoard();
   const players = [];
-  players.push(Player("First", "X"));
-  players.push(Player("Second", "O"));
+  players.push(Player("Ander", "X"));
+  players.push(Player("Bell", "O"));
 
   // player turn
   let activePlayer;
-  let activeRound;
+  let roundState;
 
   const startGame = () => {
     activePlayer = players[0];
-    activeRound = true;
+    roundState = 0;
   };
 
   const getActivePlayer = () => activePlayer;
@@ -146,7 +146,7 @@ function GameController() {
   };
 
   const playTurn = (pos) => {
-    if (!activeRound) {
+    if (roundState !== 0) {
       console.log("Round has already ended");
       return;
     }
@@ -155,6 +155,7 @@ function GameController() {
 
     if (gameState.validMove && (gameState.win || gameState.draw)) {
       finishRound(gameState.draw);
+      roundState = gameState.win ? 1 : 2;
     } else if (gameState.validMove) {
       switchPlayer();
       showGameState();
@@ -172,7 +173,6 @@ function GameController() {
       finishMsg = `${activePlayer.getName()} has won the game!`;
     }
     console.log(finishMsg);
-    activeRound = false;
   };
 
   const newRound = () => {
@@ -182,10 +182,13 @@ function GameController() {
   };
 
   const showGameState = () => {
-    gameBoard.displayBoard();
+    // gameBoard.displayBoard();
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
 
+  const getRoundState = () => {
+    return roundState;
+  };
   startGame();
   return {
     playTurn,
@@ -193,6 +196,7 @@ function GameController() {
     newRound,
     getBoard: gameBoard.getBoard,
     getBoardSize: gameBoard.getBoardSize,
+    getRoundState,
   };
 }
 
@@ -203,19 +207,41 @@ const ScreenController = (function (doc) {
   const msgBox = doc.querySelector("#msg");
   // fill container with board
   console.log("Screen");
+  const bindEvents = () => {
+    container.addEventListener("click", cellClicked);
+  };
+  const cellClicked = (event) => {
+    // console.log(`Button ${event.target.id} clicked`);
+    const gameState = game.playTurn(event.target.id);
+    console.log(gameState);
+    updateScreen(gameState);
+  };
   const updateScreen = () => {
+    // if (game.isActive()) {
+    // remove past state of the board
+    container.textContent = "";
+
+    // get latest state of board
     const board = game.getBoard();
+    if (game.getRoundState() === 1) {
+      msgBox.textContent = game.getActivePlayer().getName() + " has won";
+    } else if (game.getRoundState() === 2) {
+      msgBox.textContent = "Game has ended in a draw";
+    } else {
+      msgBox.textContent = game.getActivePlayer().getName() + " turn";
+    }
     board.forEach((row, i) => {
       row.forEach((cell, j) => {
         const cellBtn = doc.createElement("button");
         cellBtn.textContent = cell.getValue();
-        cellBtn.id = i * game.getBoardSize() + j;
+        cellBtn.id = i * game.getBoardSize() + j; // assign correct id to cell
         container.appendChild(cellBtn);
-        console.log("adding");
       });
     });
+    // }
   };
-  updateScreen();
+  updateScreen({});
+  bindEvents();
 })(document);
 
 // player 1 wins diag
