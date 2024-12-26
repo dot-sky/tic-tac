@@ -1,7 +1,7 @@
 function GameBoard() {
   let board = [];
   const BOARD_SIZE = 3;
-  let freeCells = BOARD_SIZE * BOARD_SIZE;
+  let freeCells;
   createBoard();
   resetBoard();
 
@@ -15,6 +15,7 @@ function GameBoard() {
   }
 
   function resetBoard() {
+    freeCells = BOARD_SIZE * BOARD_SIZE;
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
         board[i][j] = Cell();
@@ -98,7 +99,7 @@ function GameBoard() {
     return { win: false, winType: "none" };
   };
 
-  return { displayBoard, makeMove };
+  return { displayBoard, makeMove, resetBoard };
 }
 
 function Cell() {
@@ -126,8 +127,14 @@ const gameController = (function () {
   players.push(Player("Second", "O"));
 
   // player turn
-  let activePlayer = players[0];
-  let activeRound = true;
+  let activePlayer;
+  let activeRound;
+
+  const startGame = () => {
+    activePlayer = players[0];
+    activeRound = true;
+  };
+
   const getActivePlayer = () => activePlayer;
 
   const switchPlayer = () => {
@@ -163,12 +170,20 @@ const gameController = (function () {
     console.log(finishMsg);
     activeRound = false;
   };
+
+  const newRound = () => {
+    console.log("Restarting board...");
+    gameBoard.resetBoard();
+    startGame();
+  };
+
   const showGameState = () => {
     gameBoard.displayBoard();
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
 
-  return { playTurn, getActivePlayer };
+  newRound();
+  return { playTurn, getActivePlayer, newRound };
 })();
 // player 1 wins diag
 gameController.playTurn(4);
@@ -177,17 +192,18 @@ gameController.playTurn(2);
 gameController.playTurn(0);
 gameController.playTurn(6);
 
+gameController.newRound();
+
 // player 2 wins col
 // check this game state win isn't correctly recognized
-// gameController.playTurn(8);
-// gameController.playTurn(0);
-// gameController.playTurn(2);
-// gameController.playTurn(3);
-// gameController.playTurn(1);
-// gameController.playTurn(6);
-// gameController.playTurn(3);
+gameController.playTurn(8);
+gameController.playTurn(0);
+gameController.playTurn(2);
+gameController.playTurn(3);
+gameController.playTurn(1);
+gameController.playTurn(6);
 // player 1 wins row
-
+gameController.newRound();
 // gameController.playTurn(8);
 // gameController.playTurn(3);
 // gameController.playTurn(2);
