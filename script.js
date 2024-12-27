@@ -120,15 +120,18 @@ function Cell() {
 
 function Player(name, marker) {
   const getName = () => name;
+  const setName = (newName) => {
+    name = newName;
+  };
   const getMarker = () => marker;
-  return { getName, getMarker };
+  return { getName, setName, getMarker };
 }
 
 function GameController() {
   const gameBoard = GameBoard();
   const players = [];
-  players.push(Player("Ander", "X"));
-  players.push(Player("Bell", "O"));
+  players.push(Player("Player 1", "X"));
+  players.push(Player("Player 2", "O"));
 
   // player turn
   let activePlayer;
@@ -138,6 +141,8 @@ function GameController() {
     activePlayer = players[0];
     roundState = 0;
   };
+
+  const getPlayer = (i) => players[i];
 
   const getActivePlayer = () => activePlayer;
 
@@ -190,10 +195,13 @@ function GameController() {
   const getRoundState = () => {
     return roundState;
   };
+
   startGame();
+
   return {
     playTurn,
     getActivePlayer,
+    getPlayer,
     newRound,
     getBoard: gameBoard.getBoard,
     getBoardSize: gameBoard.getBoardSize,
@@ -206,23 +214,36 @@ const ScreenController = (function (doc) {
   // load DOM
   const container = doc.querySelector("#board");
   const msgBox = doc.querySelector("#msg");
-  // fill container with board
-  console.log("Screen");
+  const start = doc.querySelector("#start-btn");
+  const restart = doc.querySelector("#restart-btn");
+  const boxP1 = doc.querySelector("#player-1-box");
+  const boxP2 = doc.querySelector("#player-2-box");
+
   const bindEvents = () => {
     container.addEventListener("click", cellClicked);
+    start.addEventListener("click", startGame);
   };
+
+  const startGame = () => { 
+    const player1Name = boxP1.value || "Player 1";
+    const player2Name = boxP2.value || "Player 2";
+    game.getPlayer(0).setName(player1Name);
+    game.getPlayer(1).setName(player2Name);
+    updateScreen({});
+  };
+
   const cellClicked = (event) => {
-    // console.log(event.target.tagName === "BUTTON");
     if (event.target.tagName === "BUTTON") {
       const gameState = game.playTurn(event.target.id);
-      // console.log(gameState);
       updateScreen(gameState);
     }
   };
+
   const updateScreen = () => {
     // remove past state of the board
     container.textContent = "";
-    // get latest state of board
+
+    // display latest state of the board
     const board = game.getBoard();
     if (game.getRoundState() === 1) {
       msgBox.textContent = game.getActivePlayer().getName() + " has won";
@@ -239,9 +260,8 @@ const ScreenController = (function (doc) {
         container.appendChild(cellBtn);
       });
     });
-    // }
   };
-  updateScreen({});
+  // startGame();
   bindEvents();
 })(document);
 
