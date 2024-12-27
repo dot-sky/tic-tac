@@ -212,10 +212,12 @@ const ScreenController = (function (doc) {
     container.addEventListener("click", cellClicked);
   };
   const cellClicked = (event) => {
-    // console.log(`Button ${event.target.id} clicked`);
-    const gameState = game.playTurn(event.target.id);
-    console.log(gameState);
-    updateScreen(gameState);
+    // console.log(event.target.tagName === "BUTTON");
+    if (event.target.tagName === "BUTTON") {
+      const gameState = game.playTurn(event.target.id);
+      // console.log(gameState);
+      updateScreen(gameState);
+    }
   };
   const updateScreen = () => {
     // remove past state of the board
