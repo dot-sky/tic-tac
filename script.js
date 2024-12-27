@@ -162,6 +162,7 @@ function GameController() {
     } else {
       showGameState();
     }
+    return gameState;
   };
 
   const finishRound = (draw) => {
@@ -217,10 +218,8 @@ const ScreenController = (function (doc) {
     updateScreen(gameState);
   };
   const updateScreen = () => {
-    // if (game.isActive()) {
     // remove past state of the board
     container.textContent = "";
-
     // get latest state of board
     const board = game.getBoard();
     if (game.getRoundState() === 1) {
