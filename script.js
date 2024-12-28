@@ -277,8 +277,9 @@ const ScreenController = (function (doc) {
 
   const cellClicked = (event) => {
     if (event.target.tagName === "BUTTON") {
-      const gameState = game.playTurn(event.target.id);
-      updateScreen(gameState);
+      const currState = game.isRoundFinished();
+      const roundState = game.playTurn(event.target.id);
+      updateScreen(roundState, prevIsFinished);
     }
   };
 
@@ -291,9 +292,8 @@ const ScreenController = (function (doc) {
     p2Marker.textContent = player2.getMarker();
   };
 
-  const updateScreen = () => {
+  const updateScreen = (playStatus, prevIsFinished) => {
     // remove past state of the board
-    container.textContent = "";
 
     // display latest state of the board
     const board = game.getBoard();
@@ -318,11 +318,28 @@ const ScreenController = (function (doc) {
       msgBox.textContent = activePlayer.getName() + " turn";
     }
 
+    if (game.isRoundFinished() && prevIsFinished) {
+      return;
+    }
+    container.textContent = "";
     board.forEach((row, i) => {
       row.forEach((cell, j) => {
         const cellBtn = doc.createElement("button");
         cellBtn.textContent = cell.getValue();
         cellBtn.id = i * game.getBoardSize() + j; // assign correct id to cell
+
+        // painting winning cells
+        if (playStatus && playStatus.win) {
+          if (
+            (playStatus.winType === "row" && playStatus.index === i) ||
+            (playStatus.winType === "col" && playStatus.index === j) ||
+            (playStatus.winType === "diag" && i === j) ||
+            (playStatus.winType === "secondDiag" &&
+              i + j === game.getBoardSize() - 1)
+          ) {
+            cellBtn.classList.add("highlighted-cell");
+          }
+        }
         container.appendChild(cellBtn);
       });
     });

@@ -6,3 +6,6 @@
 #card-wrapper {
   display: flex;
 }
+.highlighted-cell {
+  color: red;
+}
