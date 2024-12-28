@@ -1,11 +1,32 @@
+:root {
+  --primary: #3a98d4;
+  --secondary: #79cadc;
+  --accent: #4a6884;
+  --secondary-accent: #91a2ab;
+  --bg-primary: #fefeff;
+  --bg-secondary: #d6e6ea;
+
+  --space-1x: 8px;
+  --space-2x: 16px;
+  --space-3x: 24px;
+  --space-4x: 32px;
+  --space-5x: 40px;
+}
+
 #board {
+  background: var(--secondary-accent);
   display: grid;
   grid-template: repeat(3, 50px) / repeat(3, 50px);
-  gap: 10px;
+  gap: 1px;
+}
+.btn-cell {
+  background: var(--bg-primary);
+  padding: var(--space-2x);
+  border: 0;
 }
 #card-wrapper {
   display: flex;
 }
 .highlighted-cell {
-  color: red;
+  color: var(--primary);
 }

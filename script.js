@@ -277,7 +277,7 @@ const ScreenController = (function (doc) {
 
   const cellClicked = (event) => {
     if (event.target.tagName === "BUTTON") {
-      const currState = game.isRoundFinished();
+      const prevIsFinished = game.isRoundFinished();
       const roundState = game.playTurn(event.target.id);
       updateScreen(roundState, prevIsFinished);
     }
@@ -325,7 +325,7 @@ const ScreenController = (function (doc) {
     board.forEach((row, i) => {
       row.forEach((cell, j) => {
         const cellBtn = doc.createElement("button");
-        cellBtn.textContent = cell.getValue();
+        cellBtn.textContent = cell.isFree() ? "" : cell.getValue();
         cellBtn.id = i * game.getBoardSize() + j; // assign correct id to cell
 
         // painting winning cells
@@ -340,6 +340,7 @@ const ScreenController = (function (doc) {
             cellBtn.classList.add("highlighted-cell");
           }
         }
+        cellBtn.classList.add("btn-cell");
         container.appendChild(cellBtn);
       });
     });
