@@ -140,7 +140,7 @@ function GameController() {
 
   const startRound = () => {
     activePlayer = players[0];
-    roundState = 0;
+    roundState = "playing";
   };
 
   const getPlayer = (i) => players[i];
@@ -152,7 +152,7 @@ function GameController() {
   };
 
   const playTurn = (pos) => {
-    if (roundState !== 0) {
+    if (isRoundFinished()) {
       console.log("Round has already ended");
       return;
     }
@@ -161,7 +161,6 @@ function GameController() {
 
     if (gameState.validMove && (gameState.win || gameState.draw)) {
       finishRound(gameState.draw);
-      roundState = gameState.win ? 1 : 2;
     } else if (gameState.validMove) {
       switchPlayer();
       showGameState();
@@ -176,8 +175,10 @@ function GameController() {
     let finishMsg;
     if (draw) {
       finishMsg = `Game has ended in a draw!`;
+      roundState = "draw";
     } else {
       finishMsg = `${activePlayer.getName()} has won the game!`;
+      roundState = "win";
       addWin(activePlayer);
     }
     console.log(finishMsg);
@@ -204,9 +205,9 @@ function GameController() {
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
 
-  const getRoundState = () => {
-    return roundState;
-  };
+  const getRoundState = () => roundState;
+
+  const isRoundFinished = () => roundState !== "playing";
 
   startRound();
 
@@ -219,6 +220,7 @@ function GameController() {
     getBoard: gameBoard.getBoard,
     getBoardSize: gameBoard.getBoardSize,
     getRoundState,
+    isRoundFinished,
   };
 }
 
@@ -227,27 +229,29 @@ const ScreenController = (function (doc) {
 
   // load DOM
   const container = doc.querySelector("#board");
-  const msgBox = doc.querySelector("#msg");
-  const start = doc.querySelector("#start-btn");
-  const restart = doc.querySelector("#restart-btn");
   const boxP1 = doc.querySelector("#player-1-box");
   const boxP2 = doc.querySelector("#player-2-box");
 
+  const msgBox = doc.querySelector("#msg");
   const p1Name = doc.querySelector("#p1-name");
-  const p2Name = doc.querySelector("#p2-name");
   const p1Marker = doc.querySelector("#p1-marker");
-  const p2Marker = doc.querySelector("#p2-marker");
   const p1Counter = doc.querySelector("#p1-counter");
-  const p2Counter = doc.querySelector("#p2-counter");
   const p1Status = doc.querySelector("#p1-status");
+  const p2Name = doc.querySelector("#p2-name");
+  const p2Marker = doc.querySelector("#p2-marker");
+  const p2Counter = doc.querySelector("#p2-counter");
   const p2Status = doc.querySelector("#p2-status");
+
+  const start = doc.querySelector("#start-btn");
+  const restart = doc.querySelector("#restart-btn");
+  const next = doc.querySelector("#next-btn");
 
   const bindEvents = () => {
     container.addEventListener("click", cellClicked);
     start.addEventListener("click", startGame);
     restart.addEventListener("click", restartRound);
+    next.addEventListener("click", nextRound);
   };
-
   const startGame = () => {
     const player1Name = boxP1.value || "Player 1";
     const player2Name = boxP2.value || "Player 2";
@@ -255,6 +259,15 @@ const ScreenController = (function (doc) {
     game.getPlayer(1).setName(player2Name);
     setPlayerCards();
     updateScreen();
+  };
+
+  const nextRound = () => {
+    if (game.isRoundFinished()) {
+      game.newRound();
+      updateScreen();
+    } else {
+      console.log("The round is still active...");
+    }
   };
 
   const restartRound = () => {
@@ -276,9 +289,8 @@ const ScreenController = (function (doc) {
     p2Name.textContent = player2.getName();
     p1Marker.textContent = player1.getMarker();
     p2Marker.textContent = player2.getMarker();
-    p1Counter.textContent = game.getWins(0);
-    p2Counter.textContent = game.getWins(1);
   };
+
   const updateScreen = () => {
     // remove past state of the board
     container.textContent = "";
@@ -286,6 +298,9 @@ const ScreenController = (function (doc) {
     // display latest state of the board
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
+
+    p1Counter.textContent = game.getWins(0);
+    p2Counter.textContent = game.getWins(1);
 
     if (activePlayer === game.getPlayer(0)) {
       p1Status.textContent = "Is playing...";
@@ -295,9 +310,9 @@ const ScreenController = (function (doc) {
       p2Status.textContent = "Is playing...";
     }
 
-    if (game.getRoundState() === 1) {
+    if (game.getRoundState() === "win") {
       msgBox.textContent = activePlayer.getName() + " has won";
-    } else if (game.getRoundState() === 2) {
+    } else if (game.getRoundState() === "draw") {
       msgBox.textContent = "Game has ended in a draw";
     } else {
       msgBox.textContent = activePlayer.getName() + " turn";
