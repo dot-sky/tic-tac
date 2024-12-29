@@ -7,6 +7,7 @@
   --bg-primary: #fefeff;
   --bg-secondary: #d6e6ea;
   --text: #1c1c1c;
+  --success: #92eeb2;
 
   --space-1x: 8px;
   --space-2x: 16px;
@@ -67,7 +68,7 @@ small {
 }
 .main {
   margin: auto;
-  width: 50%;
+  max-width: 500px;
   padding: var(--space-3x);
 }
 
@@ -122,11 +123,17 @@ small {
   border: solid 1px var(--secondary);
   outline: 0px;
 }
+#input-wrapper .btn {
+  flex-grow: 1;
+}
 #board {
+  margin: auto;
+  max-width: 450px;
+  height: 450px;
   background: var(--secondary-accent);
   display: grid;
-  grid-template: repeat(3, 100px) / repeat(3, 1fr);
-  gap: 1px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 2px;
 }
 .btn {
   padding: var(--space-1x) var(--space-3x);
@@ -136,7 +143,7 @@ small {
   border-radius: var(--space-2x);
   display: flex;
   justify-content: center;
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 .btn-primary {
   background-color: var(--accent);
@@ -149,11 +156,16 @@ small {
   font-size: 3.158rem; /* 50.56px */
   font-weight: 700;
 }
-
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1x);
+  margin: var(--space-2x) 0;
+}
 #card-wrapper {
   display: flex;
 }
 
 .highlighted-cell {
-  color: var(--primary);
+  color: var(--success);
 }

@@ -331,9 +331,15 @@ const ScreenController = (function (doc) {
     board.forEach((row, i) => {
       row.forEach((cell, j) => {
         const cellBtn = doc.createElement("button");
-        cellBtn.textContent = cell.isFree() ? "" : cell.getValue();
         cellBtn.id = i * game.getBoardSize() + j; // assign correct id to cell
-
+        if (!cell.isFree()) {
+          if (cell.getValue() === "X") {
+            cellBtn.classList.add("primary");
+          } else {
+            cellBtn.classList.add("secondary");
+          }
+          cellBtn.textContent = cell.getValue();
+        }
         // painting winning cells
         if (playStatus && playStatus.win) {
           if (
