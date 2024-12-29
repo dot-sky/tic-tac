@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 :root {
   --primary: #3a98d4;
   --secondary: #79cadc;
@@ -5,6 +6,7 @@
   --secondary-accent: #91a2ab;
   --bg-primary: #fefeff;
   --bg-secondary: #d6e6ea;
+  --text: #1c1c1c;
 
   --space-1x: 8px;
   --space-2x: 16px;
@@ -13,20 +15,145 @@
   --space-5x: 40px;
 }
 
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+* {
+  font-family: "Fredoka", Roboto, system-ui, "Segoe UI", Helvetica, arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segore UI Symbol";
+  font-weight: 400;
+  color: var(--text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Fredoka";
+  font-weight: 600;
+}
+
+html {
+  font-size: 100%;
+} /* 16px */
+
+h1 {
+  font-size: 4.21rem; /* 67.36px */
+}
+
+h2 {
+  font-size: 3.158rem; /* 50.56px */
+}
+
+h3 {
+  font-size: 2.369rem; /* 37.92px */
+}
+
+h4,
+.h4 {
+  font-size: 1.777rem; /* 28.48px */
+}
+
+h5,
+.h5 {
+  font-size: 1.333rem; /* 21.28px */
+}
+
+small {
+  font-size: 0.75rem; /* 12px */
+}
+.main {
+  margin: auto;
+  width: 50%;
+  padding: var(--space-3x);
+}
+
+.primary {
+  color: var(--primary);
+}
+.secondary {
+  color: var(--secondary);
+}
+.accent {
+  color: var(--accent);
+}
+.secondary-accent {
+  color: var(--secondary-accent);
+}
+
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.main-title {
+  padding: var(--space-3x) 0px;
+}
+.text-marker {
+  font-size: 1.333rem;
+  font-weight: 600;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#input-wrapper > div {
+  min-width: 315px;
+  margin: var(--space-1x) 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-1x);
+  flex-wrap: wrap;
+}
+#input-wrapper input {
+  padding: var(--space-1x) var(--space-2x);
+  border: solid 1px var(--secondary-accent);
+  border-radius: var(--space-2x);
+}
+#input-wrapper input:focus-visible {
+  border: solid 1px var(--secondary);
+  outline: 0px;
+}
 #board {
   background: var(--secondary-accent);
   display: grid;
-  grid-template: repeat(3, 50px) / repeat(3, 50px);
+  grid-template: repeat(3, 100px) / repeat(3, 1fr);
   gap: 1px;
+}
+.btn {
+  padding: var(--space-1x) var(--space-3x);
+  outline: 0px;
+  border: 0px;
+  font-size: 1.333rem;
+  border-radius: var(--space-2x);
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--bg-primary);
 }
 .btn-cell {
   background: var(--bg-primary);
-  padding: var(--space-2x);
+  padding: var(--space-1x);
   border: 0;
+  font-size: 3.158rem; /* 50.56px */
+  font-weight: 700;
 }
+
 #card-wrapper {
   display: flex;
 }
+
 .highlighted-cell {
   color: var(--primary);
 }

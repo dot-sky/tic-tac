@@ -9,48 +9,61 @@
 </head>
 
 <body>
-    <h1>Tic Tac Toe</h1>
-    <div id="input-wrapper">
-        <label for="player-1-box">Player 1</label>
-        <input class="name-input" type="text" name="player-1" id="player-1-box">
-        <label for="player-2-box">Player 2</label>
-        <input class="name-input" type="text" name="player-2" id="player-2-box">
-        <button id="start-btn"> Start</button>
-    </div>
-    <button id="restart-btn">Restart</button>
-    <button id="next-btn">Next</button>
-    <div id="board">
+    <div class="main">
 
-    </div>
-    <p id="msg"></p>
-    <div id="card-wrapper">
-        <div class="p1-card player-card">
-            <p id="p1-name">
-                Alice
-            </p>
-            <p id="p1-marker">
-                X
-            </p>
-            <p id="p1-counter">
-                3
-            </p>
-            <p id="p1-status">
-                playing...
-            </p>
+        <h1 class="main-title accent text-center">Tic Tac Toe</h1>
+        <div id="input-wrapper" class="flex-col">
+            <div>
+                <label for="player-1-box" class="h5 secondary-accent">Player 1 </label><span
+                    class="primary text-marker">X</span>
+                <input class="name-input" type="text" name="player-1" id="player-1-box">
+            </div>
+            <div>
+                <label for="player-2-box" class="h5 secondary-accent">Player 2</label><span
+                    class="secondary text-marker">O</span>
+                <input class="name-input" type="text" name="player-2" id="player-2-box">
+            </div>
+            <div>
+                <button id="start-btn" class="btn btn-primary"> Start</button>
+            </div>
         </div>
-        <div class="p2-card player-card">
-            <p id="p2-name">
-                Bob
-            </p>
-            <p id="p2-marker">
-                O
-            </p>
-            <p id="p2-counter">
-                2
-            </p>
-            <p id="p2-status">
-                waiting...
-            </p>
+        <div class="game-container hidden">
+            <button id="restart-btn" class="btn btn-primary">Restart</button>
+            <button id="next-btn" class="btn btn-primary">Next</button>
+            <div id="board">
+
+            </div>
+            <p id="msg"></p>
+            <div id="card-wrapper">
+                <div class="p1-card player-card">
+                    <p id="p1-name">
+                        Alice
+                    </p>
+                    <p id="p1-marker">
+                        X
+                    </p>
+                    <p id="p1-counter">
+                        3
+                    </p>
+                    <p id="p1-status">
+                        playing...
+                    </p>
+                </div>
+                <div class="p2-card player-card">
+                    <p id="p2-name">
+                        Bob
+                    </p>
+                    <p id="p2-marker">
+                        O
+                    </p>
+                    <p id="p2-counter">
+                        2
+                    </p>
+                    <p id="p2-status">
+                        waiting...
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

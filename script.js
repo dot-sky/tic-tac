@@ -229,6 +229,8 @@ const ScreenController = (function (doc) {
 
   // load DOM
   const container = doc.querySelector("#board");
+  const gameContainer = doc.querySelector(".game-container");
+  const inputContainer = doc.querySelector("#input-wrapper");
   const boxP1 = doc.querySelector("#player-1-box");
   const boxP2 = doc.querySelector("#player-2-box");
 
@@ -257,6 +259,10 @@ const ScreenController = (function (doc) {
     const player2Name = boxP2.value || "Player 2";
     game.getPlayer(0).setName(player1Name);
     game.getPlayer(1).setName(player2Name);
+
+    gameContainer.classList.remove("hidden");
+    inputContainer.classList.add("hidden");
+    inputContainer.classList.remove("flex-col");
     setPlayerCards();
     updateScreen();
   };
