@@ -137,10 +137,16 @@ function GameController() {
   // player turn
   let activePlayer;
   let roundState;
+  let roundNumber = 0;
 
   const startRound = () => {
-    activePlayer = players[0];
+    if (roundNumber % 2 == 0) {
+      activePlayer = players[0];
+    } else {
+      activePlayer = players[1];
+    }
     roundState = "playing";
+    roundNumber++;
   };
 
   const getPlayer = (i) => players[i];
