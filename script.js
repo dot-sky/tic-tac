@@ -249,7 +249,7 @@ const ScreenController = (function (doc) {
   const p2Counter = doc.querySelector("#p2-counter");
 
   const start = doc.querySelector("#start-btn");
-  const nextWrapper = doc.querySelector(".btn-group");
+  const msgWrapper = doc.querySelector(".msg-wrapper");
   const next = doc.querySelector("#next-btn");
 
   const bindEvents = () => {
@@ -325,18 +325,16 @@ const ScreenController = (function (doc) {
       p2Marker.classList.remove("p2-marker-inactive");
     }
 
-    nextWrapper.classList.add("hidden");
-
     if (game.getRoundState() === "win") {
-      msgBox.classList.remove("hidden");
-      nextWrapper.classList.remove("hidden");
+      msgWrapper.classList.remove("hidden");
+      // nextWrapper.classList.remove("hidden");
       msgBox.textContent = activePlayer.getName() + " wins!";
     } else if (game.getRoundState() === "draw") {
-      msgBox.classList.remove("hidden");
-      nextWrapper.classList.remove("hidden");
+      msgWrapper.classList.remove("hidden");
+      // nextWrapper.classList.remove("hidden");
       msgBox.textContent = "It's a draw!";
     } else {
-      msgBox.classList.add("hidden");
+      msgWrapper.classList.add("hidden");
       msgBox.textContent = activePlayer.getName() + " turn";
     }
 

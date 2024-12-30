@@ -161,12 +161,6 @@ small {
   font-weight: 700;
   font-family: "Fredoka";
 }
-.btn-group {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-1x);
-  margin: var(--space-3x) 0;
-}
 #card-wrapper {
   margin: var(--space-3x) 0px;
   display: flex;
@@ -217,7 +211,18 @@ small {
   color: var(--accent);
   font-weight: 600;
 }
-
+.msg-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3x);
+}
 .hidden {
   display: none;
+}
+@media (max-width: 1600px) {
+  #board {
+    width: 350px;
+    height: 350px;
+  }
 }
