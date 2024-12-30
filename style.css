@@ -26,6 +26,7 @@ body {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segore UI Symbol";
   font-weight: 400;
   color: var(--text);
+  background: var(--bg-primary);
 }
 
 h1,
@@ -224,5 +225,34 @@ small {
   #board {
     width: 350px;
     height: 350px;
+  }
+}
+@media (max-width: 430px) {
+  .main-title {
+    font-size: 2.369rem;
+  }
+  #input-wrapper > div {
+    min-width: 200px;
+    flex-wrap: nowrap;
+  }
+  #input-wrapper input {
+    display: flex;
+    width: 100%;
+    min-width: 120px;
+  }
+  #input-wrapper label {
+    flex-shrink: 0;
+  }
+  #board {
+    width: 260px;
+    height: 260px;
+  }
+  .input-wrap {
+    display: flex;
+    background: var(--primary);
+    width: 100%;
+  }
+  .name-input-wrap {
+    width: 100%;
   }
 }

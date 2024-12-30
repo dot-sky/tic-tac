@@ -371,43 +371,5 @@ const ScreenController = (function (doc) {
       });
     });
   };
-  // startGame();
   bindEvents();
 })(document);
-
-// player 1 wins diag
-// gameController.playTurn(4);
-// gameController.playTurn(1);
-// gameController.playTurn(2);
-// gameController.playTurn(0);
-// gameController.playTurn(6);
-
-// gameController.newRound();
-
-// player 2 wins col
-// check this game state win isn't correctly recognized
-// gameController.playTurn(8);
-// gameController.playTurn(0);
-// gameController.playTurn(2);
-// gameController.playTurn(3);
-// gameController.playTurn(1);
-// gameController.playTurn(6);
-// player 1 wins row
-// gameController.newRound();
-// gameController.playTurn(8);
-// gameController.playTurn(3);
-// gameController.playTurn(2);
-// gameController.playTurn(4);
-// gameController.playTurn(1);
-// gameController.playTurn(5);
-// gameController.playTurn(3);
-// draw
-// gameController.playTurn(4);
-// gameController.playTurn(1);
-// gameController.playTurn(2);
-// gameController.playTurn(0);
-// gameController.playTurn(3);
-// gameController.playTurn(6);
-// gameController.playTurn(7);
-// gameController.playTurn(5);
-// gameController.playTurn(8);
