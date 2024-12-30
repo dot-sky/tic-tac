@@ -299,39 +299,48 @@ const ScreenController = (function (doc) {
   };
 
   const updateScreen = (playStatus, prevIsFinished) => {
-    // remove past state of the board
-
     // display latest state of the board
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
+
+    // if round has ended don't re render
+    if (game.isRoundFinished() && prevIsFinished) {
+      return;
+    }
 
     p1Counter.textContent = game.getWins(0);
     p2Counter.textContent = game.getWins(1);
 
     if (activePlayer === game.getPlayer(0)) {
-      p1Status.textContent = "Is playing...";
-      p2Status.textContent = "Waiting...";
+      p1Marker.classList.add("p1-marker-active");
+      p1Marker.classList.remove("p1-marker-inactive");
+      p2Marker.classList.add("p2-marker-inactive");
+      p2Marker.classList.remove("p2-marker-active");
     } else {
-      p1Status.textContent = "Waiting...";
-      p2Status.textContent = "Is playing...";
+      p1Marker.classList.add("p1-marker-inactive");
+      p1Marker.classList.remove("p1-marker-active");
+      p2Marker.classList.add("p2-marker-active");
+      p2Marker.classList.remove("p2-marker-inactive");
     }
 
     if (game.getRoundState() === "win") {
-      msgBox.textContent = activePlayer.getName() + " has won";
+      msgBox.classList.remove("hidden");
+      msgBox.textContent = activePlayer.getName() + " wins!";
     } else if (game.getRoundState() === "draw") {
-      msgBox.textContent = "Game has ended in a draw";
+      msgBox.classList.remove("hidden");
+      msgBox.textContent = "It's a draw!";
     } else {
+      msgBox.classList.add("hidden");
       msgBox.textContent = activePlayer.getName() + " turn";
     }
 
-    if (game.isRoundFinished() && prevIsFinished) {
-      return;
-    }
+    // remove past state of the board
     container.textContent = "";
+
     board.forEach((row, i) => {
       row.forEach((cell, j) => {
         const cellBtn = doc.createElement("button");
-        cellBtn.id = i * game.getBoardSize() + j; // assign correct id to cell
+        cellBtn.id = i * game.getBoardSize() + j; // assign id number to cell
         if (!cell.isFree()) {
           if (cell.getValue() === "X") {
             cellBtn.classList.add("primary");
@@ -340,6 +349,7 @@ const ScreenController = (function (doc) {
           }
           cellBtn.textContent = cell.getValue();
         }
+
         // painting winning cells
         if (playStatus && playStatus.win) {
           if (

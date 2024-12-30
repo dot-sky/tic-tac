@@ -166,7 +166,8 @@ small {
 #card-wrapper {
   margin: var(--space-3x) 0px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: var(--space-4x);
 }
 #card-wrapper .card-marker {
   font-weight: 700;
@@ -178,10 +179,37 @@ small {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-1x);
+}
+.card-marker {
+  padding: 0px var(--space-1x);
+  border-radius: 50%;
 }
 .p1-card {
   color: var(--primary);
 }
 .p2-card {
   color: var(--secondary);
+}
+.p1-marker-inactive {
+  color: var(--primary);
+  background: var(--bg-primary);
+}
+.p1-marker-active {
+  color: var(--bg-primary);
+  background: var(--primary);
+}
+.p2-marker-inactive {
+  color: var(--secondary);
+  background: var(--bg-primary);
+}
+.p2-marker-active {
+  color: var(--bg-primary);
+  background: var(--secondary);
+}
+
+#msg {
+  text-align: center;
+  color: var(--accent);
+  font-weight: 600;
 }
