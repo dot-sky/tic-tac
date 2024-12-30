@@ -244,21 +244,17 @@ const ScreenController = (function (doc) {
   const p1Name = doc.querySelector("#p1-name");
   const p1Marker = doc.querySelector("#p1-marker");
   const p1Counter = doc.querySelector("#p1-counter");
-  const p1Status = doc.querySelector("#p1-status");
   const p2Name = doc.querySelector("#p2-name");
   const p2Marker = doc.querySelector("#p2-marker");
   const p2Counter = doc.querySelector("#p2-counter");
-  const p2Status = doc.querySelector("#p2-status");
 
   const start = doc.querySelector("#start-btn");
   const nextWrapper = doc.querySelector(".btn-group");
-  const restart = doc.querySelector("#restart-btn");
   const next = doc.querySelector("#next-btn");
 
   const bindEvents = () => {
     container.addEventListener("click", cellClicked);
     start.addEventListener("click", startGame);
-    // restart.addEventListener("click", restartRound);
     next.addEventListener("click", nextRound);
   };
   const startGame = () => {
@@ -306,7 +302,6 @@ const ScreenController = (function (doc) {
   };
 
   const updateScreen = (playStatus, prevIsFinished) => {
-    // display latest state of the board
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
 

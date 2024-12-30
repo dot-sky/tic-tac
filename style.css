@@ -42,7 +42,7 @@ html {
 } /* 16px */
 
 h1 {
-  font-size: 4.21rem; /* 67.36px */
+  font-size: 3.58rem; /* 67.36px */
 }
 
 h2 {
@@ -90,7 +90,7 @@ small {
 }
 
 .main-title {
-  padding: var(--space-3x) 0px;
+  margin-bottom: var(--space-3x);
 }
 .text-marker {
   font-size: 1.333rem;
@@ -125,8 +125,13 @@ small {
 #input-wrapper .btn {
   flex-grow: 1;
 }
+
+#input-wrapper > div:last-child {
+  margin-top: var(--space-3x);
+}
+
 #board {
-  margin: auto;
+  margin: var(--space-3x) auto;
   max-width: 450px;
   height: 450px;
   background: var(--secondary-accent);
