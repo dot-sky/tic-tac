@@ -21,7 +21,7 @@
   padding: 0px;
   box-sizing: border-box;
 }
-* {
+body {
   font-family: "Fredoka", Roboto, system-ui, "Segoe UI", Helvetica, arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segore UI Symbol";
   font-weight: 400;
@@ -38,7 +38,7 @@ h5 {
 }
 
 html {
-  font-size: 100%;
+  font-size: 18px;
 } /* 16px */
 
 h1 {
@@ -153,19 +153,35 @@ small {
   background: var(--bg-primary);
   padding: var(--space-1x);
   border: 0;
-  font-size: 3.158rem; /* 50.56px */
+  font-size: 3.158rem; /* h2 */
   font-weight: 700;
+  font-family: "Fredoka";
 }
 .btn-group {
   display: flex;
   justify-content: center;
   gap: var(--space-1x);
-  margin: var(--space-2x) 0;
+  margin: var(--space-3x) 0;
 }
 #card-wrapper {
+  margin: var(--space-3x) 0px;
   display: flex;
+  justify-content: space-around;
 }
-
+#card-wrapper .card-marker {
+  font-weight: 700;
+}
 .highlighted-cell {
   color: var(--success);
+}
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.p1-card {
+  color: var(--primary);
+}
+.p2-card {
+  color: var(--secondary);
 }
