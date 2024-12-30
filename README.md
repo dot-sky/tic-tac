@@ -14,4 +14,4 @@ When a round is finished press the 'Next' button, to continue playing!
 
 ## Play it live!
 
-Play online here:
+Play online here: [https://dot-sky.github.io/tic-tac-toe-v2/](https://dot-sky.github.io/tic-tac-toe-v2/)
