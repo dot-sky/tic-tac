@@ -54,7 +54,6 @@ function GameBoard() {
         draw = true;
       }
     } else {
-      console.log("Invalid move... try again");
       validMove = false;
     }
     const winState = checkWin();
@@ -63,7 +62,7 @@ function GameBoard() {
   const checkWin = () => {
     for (let i = 0; i < BOARD_SIZE; i++) {
       let win = true;
-      // first cell is empty, no need to check the rest
+      // if first cell is empty, skip verification
       // check row
       if (!board[i][0].isFree()) {
         for (let j = 1; j < BOARD_SIZE; j++) {
@@ -159,26 +158,19 @@ function GameController() {
 
   const playTurn = (pos) => {
     if (isRoundFinished()) {
-      console.log("Round has already ended");
       return;
     }
-    console.log(`${activePlayer.getName()} plays on position ${pos}`);
     const gameState = gameBoard.makeMove(activePlayer.getMarker(), pos);
 
     if (gameState.validMove && (gameState.win || gameState.draw)) {
       finishRound(gameState.win, gameState.draw);
     } else if (gameState.validMove) {
       switchPlayer();
-      showGameState();
-    } else {
-      showGameState();
     }
     return gameState;
   };
 
   const finishRound = (win, draw) => {
-    gameBoard.displayBoard();
-    let finishMsg;
     if (draw && !win) {
       finishMsg = `Game has ended in a draw!`;
       roundState = "draw";
@@ -187,7 +179,6 @@ function GameController() {
       roundState = "win";
       addWin(activePlayer);
     }
-    console.log(finishMsg);
   };
 
   const addWin = (player) => {
@@ -201,13 +192,12 @@ function GameController() {
   const getWins = (i) => wins[i];
 
   const newRound = () => {
-    console.log("Restarting board...");
     gameBoard.resetBoard();
     startRound();
   };
 
   const showGameState = () => {
-    // gameBoard.displayBoard();
+    gameBoard.displayBoard();
     console.log(`Waiting move of ${activePlayer.getName()}...`);
   };
 
@@ -274,8 +264,6 @@ const ScreenController = (function (doc) {
     if (game.isRoundFinished()) {
       game.newRound();
       updateScreen();
-    } else {
-      console.log("The round is still active...");
     }
   };
 
@@ -327,11 +315,9 @@ const ScreenController = (function (doc) {
 
     if (game.getRoundState() === "win") {
       msgWrapper.classList.remove("hidden");
-      // nextWrapper.classList.remove("hidden");
       msgBox.textContent = activePlayer.getName() + " wins!";
     } else if (game.getRoundState() === "draw") {
       msgWrapper.classList.remove("hidden");
-      // nextWrapper.classList.remove("hidden");
       msgBox.textContent = "It's a draw!";
     } else {
       msgWrapper.classList.add("hidden");
