@@ -1,9 +1,9 @@
-# tic-tac
+# tic-tac-toe
 
 ## TODO
 
 - [x] Make game functional through console.
-- [ ] Make game functional through DOM.
-- [ ] Add css styles.
-- [ ] Check responsiveness.
-- [ ] Add turns.
+- [x] Make game functional through DOM.
+- [x] Add css styles.
+- [x] Check responsiveness.
+- [x] Add turns.

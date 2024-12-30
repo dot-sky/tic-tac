@@ -90,9 +90,6 @@ small {
   text-align: center;
 }
 
-.main-title {
-  margin-bottom: var(--space-3x);
-}
 .text-marker {
   font-size: 1.333rem;
   font-weight: 600;
@@ -163,7 +160,7 @@ small {
   font-family: "Fredoka";
 }
 #card-wrapper {
-  margin: var(--space-3x) 0px;
+  margin: var(--space-2x) 0px;
   display: flex;
   justify-content: center;
   gap: var(--space-4x);
@@ -221,6 +218,20 @@ small {
 .hidden {
   display: none;
 }
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  /* margin-top: var(--space-1x); */
+  margin-bottom: var(--space-2x);
+  color: var(--accent);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
 @media (max-width: 1600px) {
   #board {
     width: 350px;
@@ -246,13 +257,5 @@ small {
   #board {
     width: 260px;
     height: 260px;
-  }
-  .input-wrap {
-    display: flex;
-    background: var(--primary);
-    width: 100%;
-  }
-  .name-input-wrap {
-    width: 100%;
   }
 }
