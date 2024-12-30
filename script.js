@@ -160,7 +160,7 @@ function GameController() {
     const gameState = gameBoard.makeMove(activePlayer.getMarker(), pos);
 
     if (gameState.validMove && (gameState.win || gameState.draw)) {
-      finishRound(gameState.draw);
+      finishRound(gameState.win, gameState.draw);
     } else if (gameState.validMove) {
       switchPlayer();
       showGameState();
@@ -170,10 +170,10 @@ function GameController() {
     return gameState;
   };
 
-  const finishRound = (draw) => {
+  const finishRound = (win, draw) => {
     gameBoard.displayBoard();
     let finishMsg;
-    if (draw) {
+    if (draw && !win) {
       finishMsg = `Game has ended in a draw!`;
       roundState = "draw";
     } else {
