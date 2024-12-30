@@ -245,13 +245,14 @@ const ScreenController = (function (doc) {
   const p2Status = doc.querySelector("#p2-status");
 
   const start = doc.querySelector("#start-btn");
+  const nextWrapper = doc.querySelector(".btn-group");
   const restart = doc.querySelector("#restart-btn");
   const next = doc.querySelector("#next-btn");
 
   const bindEvents = () => {
     container.addEventListener("click", cellClicked);
     start.addEventListener("click", startGame);
-    restart.addEventListener("click", restartRound);
+    // restart.addEventListener("click", restartRound);
     next.addEventListener("click", nextRound);
   };
   const startGame = () => {
@@ -323,11 +324,15 @@ const ScreenController = (function (doc) {
       p2Marker.classList.remove("p2-marker-inactive");
     }
 
+    nextWrapper.classList.add("hidden");
+
     if (game.getRoundState() === "win") {
       msgBox.classList.remove("hidden");
+      nextWrapper.classList.remove("hidden");
       msgBox.textContent = activePlayer.getName() + " wins!";
     } else if (game.getRoundState() === "draw") {
       msgBox.classList.remove("hidden");
+      nextWrapper.classList.remove("hidden");
       msgBox.textContent = "It's a draw!";
     } else {
       msgBox.classList.add("hidden");
